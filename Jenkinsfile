@@ -7,11 +7,18 @@ pipeline {
                 git url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git', branch: 'main'
             }
         }
+        stage('Test Python') {
+    steps {
+        echo "Testing Python installation..."
+        bat 'python --version'
+    }
+}
+
         stage('Setup Environment') {
             steps {
                 echo "Creating virtual environment..."
                 // Create Python virtual environment on Windows
-                bat 'C:\\Users\\mvraj\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m venv venv'
+                bat 'C:\Program Files\Python312\python.exe -m venv venv'
                 
                 echo "Activating virtual environment..."
                 // Activate the virtual environment
