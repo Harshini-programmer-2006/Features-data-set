@@ -29,16 +29,14 @@ pipeline {
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
-        stage('Run Tests') {
-            steps {
-                echo "Running tests..."
-                // You can specify the test framework you're using (e.g., pytest or unittest)
-                // Example using pytest:
-                // bat 'venv\\Scripts\\pytest.exe'
-                
-                // If you're using unittest, you can run it like this:
-                bat 'venv\\Scripts\\python.exe -m unittest discover'
-            }
+    stage('Run Tests') {
+    steps {
+        echo "Running tests..."
+        // Run unittest and specify the directory where tests are located
+        bat 'venv\\Scripts\\python.exe -m unittest discover -s tests -p "test*.py"'
+    }
+}
+
         }
         stage('Deploy') {
             steps {
