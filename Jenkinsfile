@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo "Creating virtual environment..."
                 // Create Python virtual environment on Windows
-                bat 'C:\Program Files\Python312\python.exe -m venv venv'
+                bat 'C:\Program Files\\Python312\\python.exe -m venv venv'
                 
                 echo "Activating virtual environment..."
                 // Activate the virtual environment
