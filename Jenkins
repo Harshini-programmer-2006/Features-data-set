@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout'){
             steps{
                 echo 'Cloneing repository...'
-                git branch: 'main', url: https://github.com/Harshini-programmer-2006/my-python-app.git
+                git branch: 'main', url:  https://github.com/Harshini-programmer-2006/Features-data-set.git
             }
         }
 
