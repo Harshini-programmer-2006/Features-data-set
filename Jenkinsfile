@@ -29,7 +29,7 @@ pipeline {
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
-    stage('Check Current Directory') {
+        stage('Check Current Directory') {
             steps {
                 echo "Current Directory:"
                 bat 'cd'
@@ -38,24 +38,22 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo "Running tests..."
+                // Run unittest and specify the directory where tests are located
                 bat 'venv\\Scripts\\python.exe -m unittest discover -s tests -p "test*.py"'
             }
         }
-        
         stage('Deploy') {
             steps {
                 echo "Deploying application..."
                 // Add deployment steps here. For example, uploading processed data or results.
             }
         }
-    
+    }
     post {
         always {
             echo "Cleaning up workspace..."
             cleanWs() // Clean up the workspace after the pipeline is done
         }
     }
-    }
 }
-
-
+    
