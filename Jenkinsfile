@@ -3,47 +3,38 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from GitHub
-                git url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git' 
+                // Checkout code from Git
+                git url: 'Your url' 
             }
         }
         stage('Setup Environment') {
             steps {
                 echo "Creating virtual environment..."
-                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv' // Create virtual environment
+                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'  // Use double backslashes
                 echo "Activating virtual environment..."
-                bat 'call venv\\Scripts\\activate.bat' // Activate virtual environment
+                bat 'call venv\\Scripts\\activate.bat'  // This line is fine as is
                 echo "Installing dependencies..."
-                bat 'venv\\Scripts\\pip.exe install -r requirements.txt' // Install Python dependencies
-            }
-        }
-        stage('Process Dataset') {
-            steps {
-                echo "Processing the dataset..."
-                // Assuming you have a Python script that processes the dataset (e.g., process_data.py)
-                bat 'venv\\Scripts\\python.exe process_data.py /mnt/data/Features\\ data\\ set.csv'
+                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe install -r requirements.txt'  // Use double backslashes
             }
         }
         stage('Run Tests') {
             steps {
                 echo "Running tests..."
-                // Example: running tests on the processed data
-                // You can replace this with pytest or any testing framework of your choice
-                bat 'venv\\Scripts\\python.exe -m unittest discover'
+                // Add your testing commands here, for example:
+                // bat 'pytest'
             }
         }
         stage('Deploy') {
             steps {
-                echo "Deploying the processed data or application..."
+                echo "Deploying application..."
                 // Add your deployment commands here
-                // For example, uploading results or processed data to a server
             }
         }
     }
     post {
         always {
             echo "Cleaning up workspace..."
-            cleanWs() // Clean up the workspace after the pipeline
-        }
-    }
+            cleanWs()
+        }
+    }
 }
