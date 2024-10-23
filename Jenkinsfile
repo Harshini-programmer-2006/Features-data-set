@@ -29,14 +29,18 @@ pipeline {
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
-    stage('Run Tests') {
-    steps {
-        echo "Running tests..."
-        // Run unittest and specify the directory where tests are located
-        bat 'venv\\Scripts\\python.exe -m unittest discover -s tests -p "test*.py"'
-    }
-}
-
+    stage('Check Current Directory') {
+            steps {
+                echo "Current Directory:"
+                bat 'cd'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                echo "Running tests..."
+                bat 'venv\\Scripts\\python.exe -m unittest discover -s tests -p "test*.py"'
+            }
+        }
         }
         stage('Deploy') {
             steps {
