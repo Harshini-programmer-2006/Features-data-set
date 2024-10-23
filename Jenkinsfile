@@ -35,13 +35,14 @@ pipeline {
                 bat 'cd'
             }
         }
-        stage('Run Tests') {
-            steps {
-                echo "Running tests..."
-                // Run unittest and specify the directory where tests are located
-                bat 'venv\\Scripts\\python.exe -m unittest discover -s tests -p "test*.py"'
-            }
-        }
+      stage('Run Tests') {
+    steps {
+        echo "Running tests..."
+        // Ensure the current directory is set correctly
+        bat 'cd tests && venv\\Scripts\\python.exe -m unittest discover -p "test*.py"'
+    }
+}
+
         stage('Deploy') {
             steps {
                 echo "Deploying application..."
