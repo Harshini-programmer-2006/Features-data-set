@@ -10,11 +10,11 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 echo "Creating virtual environment..."
-                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'  // Use double backslashes
+                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv' // Use double backslashes
                 echo "Activating virtual environment..."
-                bat 'call venv\\Scripts\\activate.bat'  // This line is fine as is
+                bat 'call venv\\Scripts\\activate.bat' // This line is fine as is
                 echo "Installing dependencies..."
-                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe install -r requirements.txt'  // Use double backslashes
+                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe install -r requirements.txt' // Use double backslashes
             }
         }
         stage('Run Tests') {
@@ -25,7 +25,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-         steps {
+            steps {
                 echo "Deploying application..."
                 // Add your deployment commands here
             }
@@ -35,6 +35,7 @@ pipeline {
         always {
             echo "Cleaning up workspace..."
             cleanWs()
-        }
-    }
+        }
+    }
 }
+
