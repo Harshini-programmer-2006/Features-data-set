@@ -1,27 +1,27 @@
 pipeline {
-    agent ant
+    agent any  // Use 'any' to allow Jenkins to choose an appropriate agent
 
     environment {
-        PYTHON_ENV = 'venv'       //virtual environment for python
+        PYTHON_ENV = 'venv'  // Virtual environment for Python
     }
-    stages{
-      // Stage 1: Clone the repository
-        stage('Checkout'){
-            steps{
-                echo 'Cloneing repository...'
-                git branch: 'main', url:  https://github.com/Harshini-programmer-2006/Features-data-set.git
+
+    stages {
+        // Stage 1: Clone the repository
+        stage('Checkout') {
+            steps {
+                echo 'Cloning repository...'
+                git branch: 'main', url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git'
             }
         }
 
-        // Stage 2: Set up the Python enviroment
-
+        // Stage 2: Set up the Python environment
         stage('Setup Environment') {
             steps {
-                echo 'Setting up python virtula enviroment...'
-                sh '''
-                python3 -m venv ${PYTHON_ENV}      # create a virtual environment
-                source ${PYTHON_ENV}/bin/activate   # Activate the virtual environment
-                pip install -r requirements.txt   # Install dependencies
+                echo 'Setting up Python virtual environment...'
+                bat '''
+                python -m venv %PYTHON_ENV%          // Create a virtual environment
+                call %PYTHON_ENV%\\Scripts\\activate.bat  // Activate the virtual environment
+                pip install -r requirements.txt       // Install dependencies
                 '''
             }
         }
@@ -30,39 +30,35 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh  '''
-                source ${PYTHON_ENV}/vin/activate
-                pytest tests/
+                bat '''
+                call %PYTHON_ENV%\\Scripts\\activate.bat  // Activate the virtual environment
+                pytest tests/                           // Run the tests
                 '''
             }
-            
         }
 
-          // Stage 4: Deploy (this could be to a local http server, for example)
+        // Stage 4: Deploy (this could be to a local HTTP server, for example)
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // In this example, we'll simulate deployment by copying the code to a server directory
-                sh '''
-                cp -r * /path/to/local/http/server/root/  # Copy the app to the deployment directory
+                bat '''
+                xcopy * C:\\path\\to\\local\\http\\server\\root\\ /E /I /Y  // Copy the app to the deployment directory
                 '''
             }
         }
+    }
 
-
-        
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()  // Clean the workspace after the pipeline execution
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
     }
 }
 
-post {
-    always {
-        echo 'Cleaning up workspace...'
-        cleanWs()     // Clean the workspace after the pipeline execution
-    }
-    success {
-        echo 'Pipeline completed successfully!'
-    }
-    failure {
-        echo 'Pipeline failed!'
-    }
-}
