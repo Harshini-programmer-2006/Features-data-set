@@ -3,38 +3,48 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from Git
-                git url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git' 
+                // Checkout code from Git, explicitly specifying the branch (main)
+                git url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git', branch: 'main'
             }
         }
         stage('Setup Environment') {
             steps {
                 echo "Creating virtual environment..."
-                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'  // Use double backslashes
+                // Create Python virtual environment on Windows
+                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'
+                
                 echo "Activating virtual environment..."
-                bat 'call venv\\Scripts\\activate.bat'  // This line is fine as is
+                // Activate the virtual environment
+                bat 'call venv\\Scripts\\activate.bat'
+                
                 echo "Installing dependencies..."
-                bat 'C:\\Users\\Windows\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe install -r requirements.txt'  // Use double backslashes
+                // Install dependencies from requirements.txt
+                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
         stage('Run Tests') {
             steps {
                 echo "Running tests..."
-                // Add your testing commands here, for example:
-                // bat 'pytest'
+                // You can specify the test framework you're using (e.g., pytest or unittest)
+                // Example using pytest:
+                // bat 'venv\\Scripts\\pytest.exe'
+                
+                // If you're using unittest, you can run it like this:
+                bat 'venv\\Scripts\\python.exe -m unittest discover'
             }
         }
         stage('Deploy') {
             steps {
                 echo "Deploying application..."
-                // Add your deployment commands here
+                // Add deployment steps here. For example, uploading processed data or results.
             }
         }
     }
     post {
         always {
             echo "Cleaning up workspace..."
-            cleanWs()
+            cleanWs() // Clean up the workspace after the pipeline is done
         }
     }
 }
+
