@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from Git
-                git url: 'Your url' 
+                git url: 'https://github.com/Harshini-programmer-2006/Features-data-set.git' 
             }
         }
         stage('Setup Environment') {
